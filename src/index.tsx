@@ -174,6 +174,7 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
                     });
 
                     let adjustedIndex = getAdjustedIndex(allPages);
+                    console.log("🚀 ~ initialize ~ adjustedIndex:", adjustedIndex)
 
                     setState({
                         initialized: true,
@@ -281,20 +282,22 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
         const getAdjustedIndex = (allPages: any[]) => {
             // THIS NEEDS REWORKING
             let adjustedIndex = state.pageIndex;
+            console.log("🚀 ~ getAdjustedIndex ~ adjustedIndex:", adjustedIndex)
             if (
                 previousPortrait !== undefined &&
                 previousPortrait !== portrait &&
                 singleImageMode
-            ) {
-                if (portrait) {
-                    adjustedIndex *= 2;
-                } else {
-                    adjustedIndex = Math.floor(
-                        adjustedIndex % 2 === 0
+                ) {
+                    if (portrait) {
+                        adjustedIndex *= 2;
+                    } else {
+                        adjustedIndex = Math.floor(
+                            adjustedIndex % 2 === 0
                             ? adjustedIndex / 2
                             : (adjustedIndex - 1) / 2
-                    );
-                }
+                            );
+                        }
+                        console.log("🚀 ~ getAdjustedIndex ~ adjustedIndex:", adjustedIndex)
             }
 
             if (adjustedIndex < 0 || adjustedIndex > allPages.length - 1) {
@@ -314,10 +317,12 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
         const onPageFlipped = useCallback(
             (index: number) => {
                 const newIndex =
-                    state.nextPageIndex !== undefined
-                        ? state.nextPageIndex
-                        : state.pageIndex + index;
+                state.nextPageIndex !== undefined
+                ? state.nextPageIndex
+                : state.pageIndex + index;
+                console.log("🚀 ~ newIndex:", newIndex)
 
+                console.log("🚀 ~ state.pages:", state.pages)
                 if (newIndex < 0 || newIndex > state.pages.length - 1) {
                     // this if condition theoretically should never occur in the first place, so it could be removed but it's here just in case
                     logger('invalid page');
