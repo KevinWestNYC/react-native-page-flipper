@@ -268,7 +268,7 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
                 }
 
                 if (index === state.pageIndex) {
-                    logger('same page');
+                    logger('same pagez');
                     return;
                 }
 
@@ -307,31 +307,31 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
             [goToPage, nextPage, previousPage]
         );
 
-        const getAdjustedIndex = (allPages: any[]) => {
-            // THIS NEEDS REWORKING
-            let adjustedIndex = state.pageIndex;
-            if (
-                previousPortrait !== undefined &&
-                previousPortrait !== portrait &&
-                singleImageMode
-            ) {
-                if (portrait) {
-                    adjustedIndex *= 2;
-                } else {
-                    adjustedIndex = Math.floor(
-                        adjustedIndex % 2 === 0
-                            ? adjustedIndex / 2
-                            : (adjustedIndex - 1) / 2
-                    );
-                }
-            }
+        // const getAdjustedIndex = (allPages: any[]) => {
+        //     // THIS NEEDS REWORKING
+        //     let adjustedIndex = state.pageIndex;
+        //     if (
+        //         previousPortrait !== undefined &&
+        //         previousPortrait !== portrait &&
+        //         singleImageMode
+        //     ) {
+        //         if (portrait) {
+        //             adjustedIndex *= 2;
+        //         } else {
+        //             adjustedIndex = Math.floor(
+        //                 adjustedIndex % 2 === 0
+        //                     ? adjustedIndex / 2
+        //                     : (adjustedIndex - 1) / 2
+        //             );
+        //         }
+        //     }
 
-            if (adjustedIndex < 0 || adjustedIndex > allPages.length - 1) {
-                // invalid index, reset to 0
-                adjustedIndex = 0;
-            }
-            return adjustedIndex;
-        };
+        //     if (adjustedIndex < 0 || adjustedIndex > allPages.length - 1) {
+        //         // invalid index, reset to 0
+        //         adjustedIndex = 0;
+        //     }
+        //     return adjustedIndex;
+        // };
 
         const onLayout = (e: LayoutChangeEvent) => {
             setLayout({
