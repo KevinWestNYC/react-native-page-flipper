@@ -188,7 +188,7 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
                     let adjustedIndex = 0; // Start from the beginning of the book
                     let initialNextIndex = 1; // Assumes the next page for landscape mode
 
-                    if (!singleImageMode && allPages.length > 1) {
+                    // if (!singleImageMode && allPages.length > 1) {
                         logger('singleImageMode false')
                         // For landscape mode with singleImageMode false, the first two pages are treated as a spread
                         setState({
@@ -200,19 +200,19 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
                             pageIndex: adjustedIndex,
                             isPortrait: portrait,
                         });
-                    } else {
-                        // Fallback to the original logic for portrait or singleImageMode = true
-                        logger('singleImageMode true')
-                        setState({
-                            initialized: true,
-                            pages: allPages,
-                            prev: allPages[adjustedIndex - 1],
-                            current: allPages[adjustedIndex],
-                            next: allPages[adjustedIndex + 1],
-                            pageIndex: adjustedIndex,
-                            isPortrait: portrait,
-                        });
-                    }
+                    // } else {
+                    //     // Fallback to the original logic for portrait or singleImageMode = true
+                    //     logger('singleImageMode true')
+                    //     setState({
+                    //         initialized: true,
+                    //         pages: allPages,
+                    //         prev: allPages[adjustedIndex - 1],
+                    //         current: allPages[adjustedIndex],
+                    //         next: allPages[adjustedIndex + 1],
+                    //         pageIndex: adjustedIndex,
+                    //         isPortrait: portrait,
+                    //     });
+                    // }
 
                     if (onInitialized) {
                         onInitialized({
