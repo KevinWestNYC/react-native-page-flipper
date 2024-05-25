@@ -6,4 +6,5 @@ export type Size = {
 export type Page = {
     left: string;
     right: string;
+    pageIndex: number;
 };

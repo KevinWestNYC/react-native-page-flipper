@@ -39,6 +39,7 @@ export type IBookPageProps = {
     onPageDrag?: () => void;
     onPageDragEnd?: () => void;
     renderPage?: (data: any) => any;
+    pageIndex: number;
 };
 
 export type PortraitBookInstance = { turnPage: (index: 1 | -1) => void };
@@ -67,6 +68,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
             onPageDragEnd,
             onPageDragStart,
             renderPage,
+            pageIndex
         },
         ref
     ) => {
@@ -215,6 +217,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
             getPageStyle,
             rotateYAsDeg,
             renderPage,
+            pageIndex
         };
 
         return (
@@ -263,6 +266,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                 page={current}
                                 right={true}
                                 {...iPageProps}
+                                pageIndex={pageIndex}
                             />
                         ) : (
                             <View style={{ height: '100%', width: '100%' }}>
@@ -274,7 +278,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                             </View>
                         )}
                         {prev && (
-                            <IPage page={prev} right={false} {...iPageProps} />
+                            <IPage page={prev} right={false} {...iPageProps} pageIndex={prev.page}/>
                         )}
                     </Animated.View>
                 </PanGestureHandler>
@@ -291,6 +295,7 @@ type IPageProps = {
     containerSize: Size;
     getPageStyle: any;
     renderPage?: (data: any) => any;
+    pageIndex: number;
 };
 
 const IPage: React.FC<IPageProps> = ({
@@ -301,6 +306,7 @@ const IPage: React.FC<IPageProps> = ({
     containerSize,
     getPageStyle,
     renderPage,
+    pageIndex
 }) => {
     const [loaded, setLoaded] = useState(right);
 
@@ -332,7 +338,7 @@ const IPage: React.FC<IPageProps> = ({
 
         return {
             width: Math.ceil(w),
-            zIndex: 2,
+            zIndex: pageIndex,
             opacity: 1,
             transform: [{ translateX: x }],
         };
@@ -347,7 +353,7 @@ const IPage: React.FC<IPageProps> = ({
         );
 
         const style: ViewStyle = {
-            zIndex: 1,
+            zIndex: pageIndex,
             width: Math.floor(w),
         };
 
@@ -379,7 +385,7 @@ const IPage: React.FC<IPageProps> = ({
         <View
             style={{
                 ...StyleSheet.absoluteFillObject,
-                zIndex: !right ? 5 : 0,
+                zIndex: pageIndex,
             }}
         >
             {/* BACK */}

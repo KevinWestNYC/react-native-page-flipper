@@ -40,6 +40,7 @@ export type IBookPageProps = {
     onPageDrag?: () => void;
     onPageDragEnd?: () => void;
     renderPage?: (data: any) => any;
+    pageIndex: number;
 };
 
 export type BookPageInstance = {

@@ -554,6 +554,7 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
                                         onPageFlip={onPageFlipped}
                                         key={`right${pageIndex}`}
                                         ref={portraitBookPage}
+                                        pageIndex={pageIndex}
                                     />
                                 </View>
                                 {next && (
