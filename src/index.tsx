@@ -269,6 +269,7 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
 
                 if (index === state.pageIndex) {
                     logger('same pagez');
+                    console.log("SAME")
                     return;
                 }
 
