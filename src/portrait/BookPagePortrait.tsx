@@ -278,7 +278,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                             </View>
                         )}
                         {prev && (
-                            <IPage page={prev} right={false} {...iPageProps} pageIndex={prev.page}/>
+                            <IPage page={prev} right={false} {...iPageProps} pageIndex={pageIndex - 1}/>
                         )}
                     </Animated.View>
                 </PanGestureHandler>
