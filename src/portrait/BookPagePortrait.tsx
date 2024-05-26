@@ -237,7 +237,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                     position: 'absolute',
                                     height: '100%',
                                     width: '25%',
-                                    zIndex: 10000,
+                                    zIndex: 9999,
                                     left: 0,
                                     // backgroundColor: 'red',
                                     // opacity: 0.2,
@@ -254,7 +254,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                     position: 'absolute',
                                     height: '100%',
                                     width: '30%',
-                                    zIndex: 10000,
+                                    zIndex: 9999,
                                     right: 0,
                                     // backgroundColor: 'blue',
                                     // opacity: 0.2,
@@ -271,16 +271,13 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                         ) : (
                             <View style={{ height: '100%', width: '100%' }}>
                                 {renderPage && (
-                                    <View style={getPageStyle(true, true)}>
+                                    <View style={[getPageStyle(true, true),{zIndex:10000}]}>
                                         {renderPage(current.right)}
                                     </View>
                                 )}
                             </View>
                         )}
-                        {prev && isAnimating && (
-                            <IPage page={prev} right={false} {...iPageProps} pageIndex={pageIndex}/>
-                        )}
-                        {prev && !isAnimating && (
+                        {prev && (
                             <IPage page={prev} right={false} {...iPageProps} pageIndex={pageIndex - 1}/>
                         )}
                     </Animated.View>
