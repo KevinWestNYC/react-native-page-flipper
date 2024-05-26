@@ -487,6 +487,7 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
                 onPageDragStart,
                 isPressable: pressable,
                 renderPage,
+                pageIndex
             };
 
         const ContentWrapper = renderContainer ? renderContainer : Wrapper;
