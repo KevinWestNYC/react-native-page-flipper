@@ -73,8 +73,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
         ref
     ) => {
         const containerWidth = containerSize.width;
-        const currentZIndex = useSharedValue(pageIndex);
-        const prevZIndex = useSharedValue(pageIndex - 1);
+        const [isInteractingWithPrev, setIsInteractingWithPrev] = useState(false);
 
         const pSnapPoints = !prev
             ? [-containerSize.width, 0]
@@ -98,21 +97,15 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                 if (onFlipStart && typeof onFlipStart === 'function') {
                     onFlipStart(id);
                 }
-                if (id === -1) {
-                    prevZIndex.value = currentZIndex.value + 1; // Bring the previous page to the top
-                }
                 rotateYAsDeg.value = withTiming(
                     id < 0 ? -180 : 180,
                     timingConfig,
                     () => {
                         runOnJS(onPageFlip)(id, false);
-                        if (id === -1) {
-                            prevZIndex.value = currentZIndex.value; // Reset z-index after flip
-                        }
                     }
                 );
             },
-            [onFlipStart, onPageFlip, rotateYAsDeg, setIsAnimating, currentZIndex, prevZIndex]
+            [onFlipStart, onPageFlip, rotateYAsDeg, setIsAnimating]
         );
 
         React.useImperativeHandle(
@@ -164,6 +157,11 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                 const degrees = getDegreesForX(newX);
                 x.value = newX;
                 rotateYAsDeg.value = degrees;
+                if (newX > 0) {
+                    runOnJS(setIsInteractingWithPrev)(true);
+                } else {
+                    runOnJS(setIsInteractingWithPrev)(false);
+                }
                 if (onPageDrag && typeof onPageDrag === 'function') {
                     runOnJS(onPageDrag)();
                 }
@@ -172,6 +170,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                 if (onPageDragEnd && typeof onPageDragEnd === 'function') {
                     runOnJS(onPageDragEnd)();
                 }
+                runOnJS(setIsInteractingWithPrev)(false);
 
                 const snapTo = snapPoint(x.value, event.velocityX, pSnapPoints);
                 const id = snapTo > 0 ? -1 : snapTo < 0 ? 1 : 0;
@@ -225,9 +224,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
             getPageStyle,
             rotateYAsDeg,
             renderPage,
-            pageIndex,
-            prevZIndex,
-            currentZIndex
+            pageIndex
         };
 
         return (
@@ -288,7 +285,12 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                             </View>
                         )}
                         {prev && (
-                            <IPage page={prev} right={false} {...iPageProps} pageIndex={pageIndex-1}/>
+                            <IPage 
+                            page={prev} 
+                            right={false} 
+                            {...iPageProps} 
+                            pageIndex={isInteractingWithPrev ? pageIndex : pageIndex - 1}
+                        />
                         )}
                     </Animated.View>
                 </PanGestureHandler>
@@ -306,8 +308,6 @@ type IPageProps = {
     getPageStyle: any;
     renderPage?: (data: any) => any;
     pageIndex: number;
-    prevZIndex: Animated.SharedValue<number>;
-    currentZIndex: Animated.SharedValue<number>;
 };
 
 const IPage: React.FC<IPageProps> = ({
@@ -318,9 +318,7 @@ const IPage: React.FC<IPageProps> = ({
     containerSize,
     getPageStyle,
     renderPage,
-    pageIndex,
-    prevZIndex,
-    currentZIndex
+    pageIndex
 }) => {
     const [loaded, setLoaded] = useState(right);
 
@@ -352,7 +350,7 @@ const IPage: React.FC<IPageProps> = ({
 
         return {
             width: Math.ceil(w),
-            zIndex: pageIndex === prevZIndex.value ? prevZIndex.value : currentZIndex.value,
+            zIndex: pageIndex,
             opacity: 1,
             transform: [{ translateX: x }],
         };
@@ -367,7 +365,7 @@ const IPage: React.FC<IPageProps> = ({
         );
 
         const style: ViewStyle = {
-            zIndex: pageIndex === prevZIndex.value ? prevZIndex.value : currentZIndex.value,
+            zIndex: pageIndex,
             width: Math.floor(w),
         };
 
