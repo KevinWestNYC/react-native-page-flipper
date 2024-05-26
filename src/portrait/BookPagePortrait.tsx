@@ -237,7 +237,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                     position: 'absolute',
                                     height: '100%',
                                     width: '25%',
-                                    zIndex: 9999,
+                                    zIndex: 10000,
                                     left: 0,
                                     // backgroundColor: 'red',
                                     // opacity: 0.2,
@@ -254,7 +254,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                     position: 'absolute',
                                     height: '100%',
                                     width: '30%',
-                                    zIndex: 9999,
+                                    zIndex: 10000,
                                     right: 0,
                                     // backgroundColor: 'blue',
                                     // opacity: 0.2,
@@ -266,19 +266,19 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                 page={current}
                                 right={true}
                                 {...iPageProps}
-                                pageIndex={pageIndex}
+                                pageIndex={pageIndex + 1}
                             />
                         ) : (
                             <View style={{ height: '100%', width: '100%' }}>
                                 {renderPage && (
-                                    <View style={[getPageStyle(true, true),{zIndex:10000}]}>
+                                    <View style={getPageStyle(true, true)}>
                                         {renderPage(current.right)}
                                     </View>
                                 )}
                             </View>
                         )}
                         {prev && (
-                            <IPage page={prev} right={false} {...iPageProps} pageIndex={pageIndex - 1}/>
+                            <IPage page={prev} right={false} {...iPageProps} pageIndex={pageIndex}/>
                         )}
                     </Animated.View>
                 </PanGestureHandler>
