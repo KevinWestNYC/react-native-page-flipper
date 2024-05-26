@@ -102,6 +102,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                     timingConfig,
                     () => {
                         runOnJS(onPageFlip)(id, false);
+                        runOnJS(setIsInteractingWithPrev)(false);
                     }
                 );
             },
@@ -273,7 +274,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                 page={current}
                                 right={true}
                                 {...iPageProps}
-                                pageIndex={isInteractingWithPrev ? pageIndex : pageIndex + 1}
+                                pageIndex={pageIndex}
                             />
                         ) : (
                             <View style={{ height: '100%', width: '100%' }}>
@@ -289,7 +290,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                             page={prev} 
                             right={false} 
                             {...iPageProps} 
-                            pageIndex={ pageIndex}
+                            pageIndex={isInteractingWithPrev ? pageIndex : pageIndex - 1}
                         />
                         )}
                     </Animated.View>
@@ -326,7 +327,7 @@ const IPage: React.FC<IPageProps> = ({
         // hack fix
         setTimeout(() => {
             setLoaded(true);
-        }, 50);
+        }, 300);
     }, []);
 
     const rotationVal = useDerivedValue(() => {
