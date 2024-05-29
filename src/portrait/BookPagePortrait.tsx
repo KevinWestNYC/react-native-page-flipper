@@ -74,6 +74,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
     ) => {
         const containerWidth = containerSize.width;
         const [isInteractingWithPrev, setIsInteractingWithPrev] = useState(false);
+        const [currentZIndex, setCurrentZIndex] = useState(pageIndex);
 
         const pSnapPoints = !prev
             ? [-containerSize.width, 0]
@@ -103,10 +104,11 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                     () => {
                         runOnJS(onPageFlip)(id, false);
                         runOnJS(setIsInteractingWithPrev)(false);
+                        runOnJS(setCurrentZIndex)(pageIndex + id);
                     }
                 );
             },
-            [onFlipStart, onPageFlip, rotateYAsDeg, setIsAnimating]
+            [onFlipStart, onPageFlip, rotateYAsDeg, setIsAnimating, pageIndex]
         );
 
         React.useImperativeHandle(
@@ -153,47 +155,28 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                     runOnJS(onPageDragStart)();
                 }
             },
-            onActive: (event, ctx) => {
-                const newX = ctx.x + event.translationX;
-                const degrees = getDegreesForX(newX);
-                x.value = newX;
-                rotateYAsDeg.value = degrees;
-                if (newX > 0) {
-                    runOnJS(setIsInteractingWithPrev)(true);
-                } 
-                else {
-                    runOnJS(setIsInteractingWithPrev)(false);
-                }
-                if (onPageDrag && typeof onPageDrag === 'function') {
-                    runOnJS(onPageDrag)();
-                }
-            },
             onEnd: (event) => {
                 if (onPageDragEnd && typeof onPageDragEnd === 'function') {
                     runOnJS(onPageDragEnd)();
                 }
-                // runOnJS(setIsInteractingWithPrev)(false);
-
+            
                 const snapTo = snapPoint(x.value, event.velocityX, pSnapPoints);
                 const id = snapTo > 0 ? -1 : snapTo < 0 ? 1 : 0;
-
+            
                 if (!next && id > 0) {
                     // reset
                     x.value = withTiming(0);
                     rotateYAsDeg.value = withTiming(0);
-                    // runOnJS(onDrag)(false);
                     return;
                 }
-
+            
                 const degrees = getDegreesForX(snapTo);
                 x.value = snapTo;
                 if (rotateYAsDeg.value === degrees) {
-                    // already same value
-                    // debugValue('already there');
                     runOnJS(onPageFlip)(id, false);
                 } else {
                     runOnJS(setIsAnimating)(true);
-
+            
                     const progress =
                         Math.abs(rotateYAsDeg.value - degrees) / 100;
                     const duration = clamp(
@@ -209,7 +192,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                         },
                         () => {
                             if (snapTo === 0) {
-                                //
+                                runOnJS(setIsInteractingWithPrev)(false);
                             }
                             runOnJS(onPageFlip)(id, false);
                         }
@@ -291,7 +274,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                             page={prev} 
                             right={false} 
                             {...iPageProps} 
-                            pageIndex={isInteractingWithPrev ? pageIndex : pageIndex - 1}
+                            pageIndex={isInteractingWithPrev ? currentZIndex + 1 : currentZIndex - 1}
                         />
                         )}
                     </Animated.View>
