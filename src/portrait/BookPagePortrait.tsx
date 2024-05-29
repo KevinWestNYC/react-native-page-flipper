@@ -102,7 +102,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                     timingConfig,
                     () => {
                         runOnJS(onPageFlip)(id, false);
-                        runOnJS(setIsInteractingWithPrev)(false);
+                        // runOnJS(setIsInteractingWithPrev)(false);
                     }
                 );
             },
@@ -209,7 +209,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                         },
                         () => {
                             if (snapTo === 0) {
-                                runOnJS(setIsInteractingWithPrev)(false);
+                                //
                             }
                             runOnJS(onPageFlip)(id, false);
                         }
