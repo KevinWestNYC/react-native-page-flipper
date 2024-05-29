@@ -155,6 +155,21 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                     runOnJS(onPageDragStart)();
                 }
             },
+            onActive: (event, ctx) => {
+                const newX = ctx.x + event.translationX;
+                const degrees = getDegreesForX(newX);
+                x.value = newX;
+                rotateYAsDeg.value = degrees;
+                if (newX > 0) {
+                    runOnJS(setIsInteractingWithPrev)(true);
+                } 
+                else {
+                    runOnJS(setIsInteractingWithPrev)(false);
+                }
+                if (onPageDrag && typeof onPageDrag === 'function') {
+                    runOnJS(onPageDrag)();
+                }
+            },
             onEnd: (event) => {
                 if (onPageDragEnd && typeof onPageDragEnd === 'function') {
                     runOnJS(onPageDragEnd)();
