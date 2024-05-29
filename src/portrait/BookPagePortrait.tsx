@@ -171,8 +171,8 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
             onEnd: (event) => {
                 if (onPageDragEnd && typeof onPageDragEnd === 'function') {
                     runOnJS(onPageDragEnd)();
-                    runOnJS(setIsInteractingWithPrev)(false);
                 }
+                runOnJS(setIsInteractingWithPrev)(false);
 
                 const snapTo = snapPoint(x.value, event.velocityX, pSnapPoints);
                 const id = snapTo > 0 ? -1 : snapTo < 0 ? 1 : 0;
