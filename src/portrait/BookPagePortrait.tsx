@@ -253,7 +253,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                     width: '25%',
                                     zIndex: 10000,
                                     left: 0,
-                                    // backgroundColor: 'red',
+                                    backgroundColor: 'red',
                                     // opacity: 0.2,
                                 }}
                             />
@@ -270,12 +270,12 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                     width: '30%',
                                     zIndex: 10000,
                                     right: 0,
-                                    // backgroundColor: 'blue',
+                                    backgroundColor: 'blue',
                                     // opacity: 0.2,
                                 }}
                             />
                         )}
-                        {current && next ? (
+                        {current && next || current && pageIndex + 1 == totalPages ? (
                             <IPage
                                 page={current}
                                 right={true}
@@ -283,7 +283,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                 pageIndex={pageIndex}
                             />
                         ) : (
-                            <View style={{ height: '100%', width: '100%' }}>
+                            <View style={{ height: '100%', width: '100%', backgroundColor:'green' }}>
                                 {renderPage && (
                                     <View style={getPageStyle(true, true)}>
                                         {renderPage(current.right)}
@@ -296,7 +296,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                             page={prev} 
                             right={false} 
                             {...iPageProps} 
-                            pageIndex={isInteractingWithPrev || (pageIndex + 1 == totalPages) ? pageIndex : pageIndex - 1}
+                            pageIndex={isInteractingWithPrev ? pageIndex : pageIndex - 1}
                         />
                         )}
                     </Animated.View>
@@ -405,6 +405,7 @@ const IPage: React.FC<IPageProps> = ({
             style={{
                 ...StyleSheet.absoluteFillObject,
                 zIndex: pageIndex,
+                backgroundColor:'orange'
             }}
         >
             {/* BACK */}
