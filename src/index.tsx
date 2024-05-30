@@ -173,20 +173,22 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
                         data,
                     });
 
-                    let adjustedIndex = getAdjustedIndex(allPages);
+                    // let adjustedIndex = getAdjustedIndex(allPages);
+
+                    
+
+                    let adjustedIndex = 0; // Start from the beginning of the book
+                    let initialNextIndex = 1; // Assumes the next page for landscape mode
 
                     setState({
                         initialized: true,
                         pages: allPages,
                         prev: undefined,
                         current: allPages[adjustedIndex],
-                        next: allPages[adjustedIndex + 1],
+                        next: allPages[initialNextIndex],
                         pageIndex: adjustedIndex,
                         isPortrait: portrait,
                     });
-
-                    // let adjustedIndex = 0; // Start from the beginning of the book
-                    // let initialNextIndex = 1; // Assumes the next page for landscape mode
 
                     // // if (!singleImageMode && allPages.length > 1) {
                     //     logger('singleImageMode false')
