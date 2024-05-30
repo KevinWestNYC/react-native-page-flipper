@@ -220,7 +220,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
             },
         });
 
-        const gesturesEnabled = enabled && !isAnimating;
+        const gesturesEnabled = enabled && !isAnimating && pageIndex + 1 != totalPages;
 
         const iPageProps = {
             containerSize,
@@ -231,8 +231,6 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
             pageIndex,
             totalPages
         };
-        console.log("🚀 ~ file: BookPagePortrait.tsx:234 ~ iPageProps.totalPages:", iPageProps.totalPages)
-        console.log("🚀 ~ file: BookPagePortrait.tsx:234 ~ iPageProps.pageIndex:", iPageProps.pageIndex)
 
         return (
             <Animated.View style={containerStyle}>
@@ -260,7 +258,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                         )}
                         {isPressable && next && (
                             <Pressable
-                                disabled={isAnimating || pageIndex + 1 == totalPages}
+                                disabled={isAnimating}
                                 onPress={() => {
                                     if (!isAnimatingRef.current) turnPage(1);
                                 }}
