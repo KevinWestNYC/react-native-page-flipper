@@ -76,6 +76,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
     ) => {
         const containerWidth = containerSize.width;
         const [isInteractingWithPrev, setIsInteractingWithPrev] = useState(false);
+        const [isSwipingLeft, setIsSwipingLeft] = useState(false);
 
         const pSnapPoints = !prev
             ? [-containerSize.width, 0]
@@ -160,11 +161,13 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                 const degrees = getDegreesForX(newX);
                 x.value = newX;
                 rotateYAsDeg.value = degrees;
+                console.log("🚀 ~ file: BookPagePortrait.tsx:164 ~ newX:", newX)
                 if (newX > 0) {
                     runOnJS(setIsInteractingWithPrev)(true);
-                } 
-                else {
+                    runOnJS(setIsSwipingLeft)(true);
+                } else {
                     runOnJS(setIsInteractingWithPrev)(false);
+                    runOnJS(setIsSwipingLeft)(false);
                 }
                 if (onPageDrag && typeof onPageDrag === 'function') {
                     runOnJS(onPageDrag)();
@@ -221,7 +224,8 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
         });
 
         // const gesturesEnabled = enabled && !isAnimating && pageIndex + 1 != totalPages;
-        const gesturesEnabled = enabled && !isAnimating;
+        const gesturesEnabled = enabled && !isAnimating && (pageIndex + 1 != totalPages || (pageIndex + 1 == totalPages && isSwipingLeft));
+
 
         const iPageProps = {
             containerSize,
