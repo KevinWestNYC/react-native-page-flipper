@@ -1,4 +1,4 @@
-// import usePrevious from './hooks/usePrevious';
+import usePrevious from './hooks/usePrevious';
 import useSetState from './hooks/useSetState';
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useRef } from 'react';
@@ -102,7 +102,7 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
         const prevBookPage = useRef<BookPageInstance>(null);
         const nextBookPage = useRef<BookPageInstance>(null);
         const portraitBookPage = useRef<PortraitBookInstance>(null);
-        // const previousPortrait = usePrevious(portrait);
+        const previousPortrait = usePrevious(portrait);
         const containerSize = useMemo(() => {
             if (!state.initialized) {
                 return {
@@ -173,22 +173,20 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
                         data,
                     });
 
-                    // let adjustedIndex = getAdjustedIndex(allPages);
-
-                    
-
-                    let adjustedIndex = 0; // Start from the beginning of the book
-                    let initialNextIndex = 1; // Assumes the next page for landscape mode
+                    let adjustedIndex = getAdjustedIndex(allPages);
 
                     setState({
                         initialized: true,
                         pages: allPages,
                         prev: undefined,
                         current: allPages[adjustedIndex],
-                        next: allPages[initialNextIndex],
+                        next: allPages[adjustedIndex + 1],
                         pageIndex: adjustedIndex,
                         isPortrait: portrait,
                     });
+
+                    // let adjustedIndex = 0; // Start from the beginning of the book
+                    // let initialNextIndex = 1; // Assumes the next page for landscape mode
 
                     // // if (!singleImageMode && allPages.length > 1) {
                     //     logger('singleImageMode false')
@@ -310,31 +308,31 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
             [goToPage, nextPage, previousPage]
         );
 
-        // const getAdjustedIndex = (allPages: any[]) => {
-        //     // THIS NEEDS REWORKING
-        //     let adjustedIndex = state.pageIndex;
-        //     if (
-        //         previousPortrait !== undefined &&
-        //         previousPortrait !== portrait &&
-        //         singleImageMode
-        //     ) {
-        //         if (portrait) {
-        //             adjustedIndex *= 2;
-        //         } else {
-        //             adjustedIndex = Math.floor(
-        //                 adjustedIndex % 2 === 0
-        //                     ? adjustedIndex / 2
-        //                     : (adjustedIndex - 1) / 2
-        //             );
-        //         }
-        //     }
+        const getAdjustedIndex = (allPages: any[]) => {
+            // THIS NEEDS REWORKING
+            let adjustedIndex = state.pageIndex;
+            if (
+                previousPortrait !== undefined &&
+                previousPortrait !== portrait &&
+                singleImageMode
+            ) {
+                if (portrait) {
+                    adjustedIndex *= 2;
+                } else {
+                    adjustedIndex = Math.floor(
+                        adjustedIndex % 2 === 0
+                            ? adjustedIndex / 2
+                            : (adjustedIndex - 1) / 2
+                    );
+                }
+            }
 
-        //     if (adjustedIndex < 0 || adjustedIndex > allPages.length - 1) {
-        //         // invalid index, reset to 0
-        //         adjustedIndex = 0;
-        //     }
-        //     return adjustedIndex;
-        // };
+            if (adjustedIndex < 0 || adjustedIndex > allPages.length - 1) {
+                // invalid index, reset to 0
+                adjustedIndex = 0;
+            }
+            return adjustedIndex;
+        };
 
         const onLayout = (e: LayoutChangeEvent) => {
             setLayout({
