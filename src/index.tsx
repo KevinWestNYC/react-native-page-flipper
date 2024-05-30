@@ -1,4 +1,4 @@
-import usePrevious from './hooks/usePrevious';
+// import usePrevious from './hooks/usePrevious';
 import useSetState from './hooks/useSetState';
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useRef } from 'react';
@@ -102,7 +102,7 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
         const prevBookPage = useRef<BookPageInstance>(null);
         const nextBookPage = useRef<BookPageInstance>(null);
         const portraitBookPage = useRef<PortraitBookInstance>(null);
-        const previousPortrait = usePrevious(portrait);
+        // const previousPortrait = usePrevious(portrait);
         const containerSize = useMemo(() => {
             if (!state.initialized) {
                 return {
