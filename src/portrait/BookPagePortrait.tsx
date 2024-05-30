@@ -296,7 +296,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                             page={prev} 
                             right={false} 
                             {...iPageProps} 
-                            pageIndex={isInteractingWithPrev || (pageIndex == totalPages) ? pageIndex : pageIndex - 1}
+                            pageIndex={isInteractingWithPrev || (pageIndex + 1 == totalPages) ? pageIndex : pageIndex - 1}
                         />
                         )}
                     </Animated.View>
