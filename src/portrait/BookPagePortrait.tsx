@@ -74,6 +74,9 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
         },
         ref
     ) => {
+            console.log("🚀 ~ file: BookPagePortrait.tsx:77 ~ next:", next)
+            console.log("🚀 ~ file: BookPagePortrait.tsx:77 ~ prev:", prev)
+            console.log("🚀 ~ file: BookPagePortrait.tsx:77 ~ current:", current)
         const containerWidth = containerSize.width;
         const [isInteractingWithPrev, setIsInteractingWithPrev] = useState(false);
 
@@ -253,7 +256,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                     width: '25%',
                                     zIndex: 10000,
                                     left: 0,
-                                    backgroundColor: 'red',
+                                    // backgroundColor: 'red',
                                     // opacity: 0.2,
                                 }}
                             />
@@ -270,22 +273,23 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                     width: '30%',
                                     zIndex: 10000,
                                     right: 0,
-                                    backgroundColor: 'blue',
+                                    // backgroundColor: 'blue',
                                     // opacity: 0.2,
                                 }}
                             />
                         )}
-                        {current && next || current && pageIndex + 1 == totalPages ? (
+                        {/* || current && pageIndex + 1 == totalPages */}
+                        {current && next ? (
                             <IPage
                                 page={current}
                                 right={true}
                                 {...iPageProps}
-                                pageIndex={pageIndex}
+                                pageIndex={pageIndex+1}
                             />
                         ) : (
-                            <View style={{ height: '100%', width: '100%', backgroundColor:'green' }}>
+                            <View style={{ height: '100%', width: '100%'}}>
                                 {renderPage && (
-                                    <View style={getPageStyle(true, true)}>
+                                    <View style={[getPageStyle(true, true), {backgroundColor:'red'}]}>
                                         {renderPage(current.right)}
                                     </View>
                                 )}
@@ -405,7 +409,6 @@ const IPage: React.FC<IPageProps> = ({
             style={{
                 ...StyleSheet.absoluteFillObject,
                 zIndex: pageIndex,
-                backgroundColor:'orange'
             }}
         >
             {/* BACK */}
