@@ -74,9 +74,6 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
         },
         ref
     ) => {
-            console.log("🚀 ~ file: BookPagePortrait.tsx:77 ~ next:", next)
-            console.log("🚀 ~ file: BookPagePortrait.tsx:77 ~ prev:", prev)
-            console.log("🚀 ~ file: BookPagePortrait.tsx:77 ~ current:", current)
         const containerWidth = containerSize.width;
         const [isInteractingWithPrev, setIsInteractingWithPrev] = useState(false);
 
@@ -263,7 +260,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                         )}
                         {isPressable && next && (
                             <Pressable
-                                disabled={isAnimating}
+                                disabled={isAnimating || current && pageIndex + 1 == totalPages}
                                 onPress={() => {
                                     if (!isAnimatingRef.current) turnPage(1);
                                 }}
@@ -278,18 +275,17 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                 }}
                             />
                         )}
-                        {/* || current && pageIndex + 1 == totalPages */}
-                        {current && next ? (
+                        {current && next || current && pageIndex + 1 == totalPages ? (
                             <IPage
                                 page={current}
                                 right={true}
                                 {...iPageProps}
-                                pageIndex={pageIndex+1}
+                                pageIndex={pageIndex}
                             />
                         ) : (
                             <View style={{ height: '100%', width: '100%'}}>
                                 {renderPage && (
-                                    <View style={[getPageStyle(true, true), {backgroundColor:'red'}]}>
+                                    <View style={getPageStyle(true, true)}>
                                         {renderPage(current.right)}
                                     </View>
                                 )}
