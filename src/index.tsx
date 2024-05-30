@@ -173,46 +173,46 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
                         data,
                     });
 
-                    // let adjustedIndex = getAdjustedIndex(allPages);
+                    let adjustedIndex = getAdjustedIndex(allPages);
 
-                    // setState({
-                    //     initialized: true,
-                    //     pages: allPages,
-                    //     prev: undefined,
-                    //     current: allPages[adjustedIndex],
-                    //     next: allPages[adjustedIndex + 1],
-                    //     pageIndex: adjustedIndex,
-                    //     isPortrait: portrait,
-                    // });
+                    setState({
+                        initialized: true,
+                        pages: allPages,
+                        prev: undefined,
+                        current: allPages[adjustedIndex],
+                        next: allPages[adjustedIndex + 1],
+                        pageIndex: adjustedIndex,
+                        isPortrait: portrait,
+                    });
 
-                    let adjustedIndex = 0; // Start from the beginning of the book
-                    let initialNextIndex = 1; // Assumes the next page for landscape mode
+                    // let adjustedIndex = 0; // Start from the beginning of the book
+                    // let initialNextIndex = 1; // Assumes the next page for landscape mode
 
-                    // if (!singleImageMode && allPages.length > 1) {
-                        logger('singleImageMode false')
-                        // For landscape mode with singleImageMode false, the first two pages are treated as a spread
-                        setState({
-                            initialized: true,
-                            pages: allPages,
-                            prev: undefined, // No previous page at the start
-                            current: allPages[adjustedIndex], // First page of the book
-                            next: allPages[initialNextIndex], // Second page of the book (right side of the spread)
-                            pageIndex: adjustedIndex,
-                            isPortrait: portrait,
-                        });
-                    // } else {
-                    //     // Fallback to the original logic for portrait or singleImageMode = true
-                    //     logger('singleImageMode true')
+                    // // if (!singleImageMode && allPages.length > 1) {
+                    //     logger('singleImageMode false')
+                    //     // For landscape mode with singleImageMode false, the first two pages are treated as a spread
                     //     setState({
                     //         initialized: true,
                     //         pages: allPages,
-                    //         prev: allPages[adjustedIndex - 1],
-                    //         current: allPages[adjustedIndex],
-                    //         next: allPages[adjustedIndex + 1],
+                    //         prev: undefined, // No previous page at the start
+                    //         current: allPages[adjustedIndex], // First page of the book
+                    //         next: allPages[initialNextIndex], // Second page of the book (right side of the spread)
                     //         pageIndex: adjustedIndex,
                     //         isPortrait: portrait,
                     //     });
-                    // }
+                    // // } else {
+                    // //     // Fallback to the original logic for portrait or singleImageMode = true
+                    // //     logger('singleImageMode true')
+                    // //     setState({
+                    // //         initialized: true,
+                    // //         pages: allPages,
+                    // //         prev: allPages[adjustedIndex - 1],
+                    // //         current: allPages[adjustedIndex],
+                    // //         next: allPages[adjustedIndex + 1],
+                    // //         pageIndex: adjustedIndex,
+                    // //         isPortrait: portrait,
+                    // //     });
+                    // // }
 
                     if (onInitialized) {
                         onInitialized({
@@ -308,31 +308,31 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
             [goToPage, nextPage, previousPage]
         );
 
-        // const getAdjustedIndex = (allPages: any[]) => {
-        //     // THIS NEEDS REWORKING
-        //     let adjustedIndex = state.pageIndex;
-        //     if (
-        //         previousPortrait !== undefined &&
-        //         previousPortrait !== portrait &&
-        //         singleImageMode
-        //     ) {
-        //         if (portrait) {
-        //             adjustedIndex *= 2;
-        //         } else {
-        //             adjustedIndex = Math.floor(
-        //                 adjustedIndex % 2 === 0
-        //                     ? adjustedIndex / 2
-        //                     : (adjustedIndex - 1) / 2
-        //             );
-        //         }
-        //     }
+        const getAdjustedIndex = (allPages: any[]) => {
+            // THIS NEEDS REWORKING
+            let adjustedIndex = state.pageIndex;
+            if (
+                previousPortrait !== undefined &&
+                previousPortrait !== portrait &&
+                singleImageMode
+            ) {
+                if (portrait) {
+                    adjustedIndex *= 2;
+                } else {
+                    adjustedIndex = Math.floor(
+                        adjustedIndex % 2 === 0
+                            ? adjustedIndex / 2
+                            : (adjustedIndex - 1) / 2
+                    );
+                }
+            }
 
-        //     if (adjustedIndex < 0 || adjustedIndex > allPages.length - 1) {
-        //         // invalid index, reset to 0
-        //         adjustedIndex = 0;
-        //     }
-        //     return adjustedIndex;
-        // };
+            if (adjustedIndex < 0 || adjustedIndex > allPages.length - 1) {
+                // invalid index, reset to 0
+                adjustedIndex = 0;
+            }
+            return adjustedIndex;
+        };
 
         const onLayout = (e: LayoutChangeEvent) => {
             setLayout({
