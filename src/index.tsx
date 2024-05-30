@@ -268,7 +268,7 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
                 }
 
                 if (index === state.pageIndex) {
-                    logger('same pagez');
+                    logger('same pagezzz');
                     console.log("SAME")
                     return;
                 }
@@ -557,6 +557,7 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
                                         key={`right${pageIndex}`}
                                         ref={portraitBookPage}
                                         pageIndex={pageIndex}
+                                        totalPages={state.pages.length}
                                     />
                                 </View>
                                 {next && (

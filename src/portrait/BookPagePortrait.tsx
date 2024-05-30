@@ -40,6 +40,7 @@ export type IBookPageProps = {
     onPageDragEnd?: () => void;
     renderPage?: (data: any) => any;
     pageIndex: number;
+    totalPages:number;
 };
 
 export type PortraitBookInstance = { turnPage: (index: 1 | -1) => void };
@@ -68,7 +69,8 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
             onPageDragEnd,
             onPageDragStart,
             renderPage,
-            pageIndex
+            pageIndex,
+            totalPages
         },
         ref
     ) => {
@@ -226,8 +228,11 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
             getPageStyle,
             rotateYAsDeg,
             renderPage,
-            pageIndex
+            pageIndex,
+            totalPages
         };
+        console.log("🚀 ~ file: BookPagePortrait.tsx:234 ~ iPageProps.totalPages:", iPageProps.totalPages)
+        console.log("🚀 ~ file: BookPagePortrait.tsx:234 ~ iPageProps.pageIndex:", iPageProps.pageIndex)
 
         return (
             <Animated.View style={containerStyle}>
@@ -291,7 +296,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                             page={prev} 
                             right={false} 
                             {...iPageProps} 
-                            pageIndex={isInteractingWithPrev ? pageIndex : pageIndex - 1}
+                            pageIndex={isInteractingWithPrev || (pageIndex == totalPages) ? pageIndex : pageIndex - 1}
                         />
                         )}
                     </Animated.View>
