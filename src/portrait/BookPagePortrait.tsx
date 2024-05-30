@@ -260,7 +260,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                         )}
                         {isPressable && next && (
                             <Pressable
-                                disabled={isAnimating || current && pageIndex + 1 == totalPages}
+                                disabled={isAnimating || pageIndex + 1 == totalPages}
                                 onPress={() => {
                                     if (!isAnimatingRef.current) turnPage(1);
                                 }}
