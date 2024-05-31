@@ -278,11 +278,11 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                 }}
                             />
                         )}
-                        {current && next || current && pageIndex + 1 == totalPages ? (  
-                        //  {current && next ? ( this line makes the last page interactive, though swiping to prev works fine
+                        {current && next || current && pageIndex + 1 == totalPages ? (  //this line makes the last page interactive, though swiping to prev works fine
+                        // {current && next ? (
                             <IPage
                                 page={current}
-                                right={!(current && pageIndex + 1 == totalPages)}
+                                right={true}
                                 {...iPageProps}
                                 pageIndex={pageIndex}
                             />
