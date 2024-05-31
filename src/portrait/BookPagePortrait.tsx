@@ -76,7 +76,6 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
     ) => {
         const containerWidth = containerSize.width;
         const [isInteractingWithPrev, setIsInteractingWithPrev] = useState(false);
-        const [isSwipingLeft, setIsSwipingLeft] = useState(true);
 
         const pSnapPoints = !prev
             ? [-containerSize.width, 0]
@@ -105,7 +104,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                     timingConfig,
                     () => {
                         runOnJS(onPageFlip)(id, false);
-                        runOnJS(setIsInteractingWithPrev)(false);
+                        // runOnJS(setIsInteractingWithPrev)(false);
                     }
                 );
             },
@@ -161,13 +160,11 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                 const degrees = getDegreesForX(newX);
                 x.value = newX;
                 rotateYAsDeg.value = degrees;
-                console.log("🚀 ~ file: BookPagePortrait.tsx:164 ~ newX:", newX)
                 if (newX > 0) {
                     runOnJS(setIsInteractingWithPrev)(true);
-                    runOnJS(setIsSwipingLeft)(true);
-                } else {
+                } 
+                else {
                     runOnJS(setIsInteractingWithPrev)(false);
-                    runOnJS(setIsSwipingLeft)(false);
                 }
                 if (onPageDrag && typeof onPageDrag === 'function') {
                     runOnJS(onPageDrag)();
@@ -223,11 +220,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
             },
         });
 
-        // const gesturesEnabled = enabled && !isAnimating && pageIndex + 1 != totalPages;
-        // const gesturesEnabled = enabled && !isAnimating && pageIndex + 1 != totalPages;
-        const gesturesEnabled = enabled && !isAnimating || (pageIndex + 1 == totalPages && isSwipingLeft);
-        console.log("🚀 ~ file: BookPagePortrait.tsx:229 ~ isSwipingLeft:", isSwipingLeft)
-
+        const gesturesEnabled = enabled && !isAnimating && pageIndex + 1 != totalPages;
 
         const iPageProps = {
             containerSize,
