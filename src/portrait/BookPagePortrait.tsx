@@ -160,6 +160,11 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                 const degrees = getDegreesForX(newX);
                 x.value = newX;
                 rotateYAsDeg.value = degrees;
+
+                if (pageIndex + 1 === totalPages && newX < 0) {
+                    return;
+                }
+
                 if (newX > 0) {
                     runOnJS(setIsInteractingWithPrev)(true);
                 } 
