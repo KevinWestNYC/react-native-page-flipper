@@ -160,8 +160,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                 const degrees = getDegreesForX(newX);
                 x.value = newX;
                 rotateYAsDeg.value = degrees;
-                if (newX > 0 && pageIndex + 1 != totalPages) {
-                // if (newX > 0) {
+                if (newX > 0) {
                     runOnJS(setIsInteractingWithPrev)(true);
                 } 
                 else {
@@ -221,7 +220,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
             },
         });
 
-        const gesturesEnabled = enabled && !isAnimating && pageIndex + 1 != totalPages;
+        const gesturesEnabled = enabled && !isAnimating;
 
         const iPageProps = {
             containerSize,
@@ -274,8 +273,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                 }}
                             />
                         )}
-                        {current && next  ? (
-                        // {current && next || current && pageIndex + 1 == totalPages ? (
+                        {current && next || current && pageIndex + 1 == totalPages ? (
                             <IPage
                                 page={current}
                                 right={true}
