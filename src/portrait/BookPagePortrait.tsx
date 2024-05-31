@@ -162,11 +162,11 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                 x.value = newX;
                 rotateYAsDeg.value = degrees;
 
-                if (pageIndex + 1 === totalPages && newX < 0) {
-                    runOnJS(setIsSwipingLeftOnLastPage)(true)
-                } else {
-                    runOnJS(setIsSwipingLeftOnLastPage)(false)
-                }
+                // if (pageIndex + 1 === totalPages && newX < 0) { //swiping left on final page
+                //     runOnJS(setIsSwipingLeftOnLastPage)(true)
+                // } else {
+                //     runOnJS(setIsSwipingLeftOnLastPage)(true)
+                // }
 
                 if (newX > 0) {
                     runOnJS(setIsInteractingWithPrev)(true);
@@ -228,7 +228,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
             },
         });
 
-        const gesturesEnabled = enabled && !isAnimating && !isSwipingLeftOnLastPage;
+        const gesturesEnabled = enabled && !isAnimating;
 
         const iPageProps = {
             containerSize,
