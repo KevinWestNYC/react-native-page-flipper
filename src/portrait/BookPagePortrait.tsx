@@ -223,8 +223,9 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
             },
         });
 
+        const gesturesEnabled = enabled && !isAnimating;
         // const gesturesEnabled = enabled && !isAnimating && pageIndex + 1 != totalPages;
-        const gesturesEnabled = enabled && !isAnimating || (enabled && !isAnimating && (pageIndex + 1 == totalPages && isSwipingLeft));
+        // const gesturesEnabled = enabled && !isAnimating || (enabled && !isAnimating && (pageIndex + 1 == totalPages && isSwipingLeft));
 
 
         const iPageProps = {
