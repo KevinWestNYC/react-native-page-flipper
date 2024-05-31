@@ -76,6 +76,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
     ) => {
         const containerWidth = containerSize.width;
         const [isInteractingWithPrev, setIsInteractingWithPrev] = useState(false);
+        const [isSwipingLeftOnLastPage, setIsSwipingLeftOnLastPage] = useState(false);
 
         const pSnapPoints = !prev
             ? [-containerSize.width, 0]
@@ -162,8 +163,9 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                 rotateYAsDeg.value = degrees;
 
                 if (pageIndex + 1 === totalPages && newX < 0) {
-                    console.log("LASSY")
-                    return;
+                    runOnJS(setIsSwipingLeftOnLastPage)(true)
+                } else {
+                    runOnJS(setIsSwipingLeftOnLastPage)(false)
                 }
 
                 if (newX > 0) {
@@ -226,7 +228,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
             },
         });
 
-        const gesturesEnabled = enabled && !isAnimating;
+        const gesturesEnabled = enabled && !isAnimating && !isSwipingLeftOnLastPage;
 
         const iPageProps = {
             containerSize,
