@@ -162,6 +162,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                 rotateYAsDeg.value = degrees;
 
                 if (pageIndex + 1 === totalPages && newX < 0) {
+                    console.log("LASSY")
                     return;
                 }
 
