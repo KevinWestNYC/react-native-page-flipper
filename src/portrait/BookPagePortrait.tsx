@@ -300,7 +300,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                                 page={current}
                                 right={true}
                                 {...iPageProps}
-                                pageIndex={pageIndex + 1}
+                                pageIndex={pageIndex - 1}
                             />
                         ) : (
                             <View style={{ height: '100%', width: '100%'}}>
