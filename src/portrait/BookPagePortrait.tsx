@@ -76,7 +76,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
     ) => {
         const containerWidth = containerSize.width;
         const [isInteractingWithPrev, setIsInteractingWithPrev] = useState(false);
-        const [isSwipingLeft, setIsSwipingLeft] = useState(false);
+        const [isSwipingLeft, setIsSwipingLeft] = useState(true);
 
         const pSnapPoints = !prev
             ? [-containerSize.width, 0]
