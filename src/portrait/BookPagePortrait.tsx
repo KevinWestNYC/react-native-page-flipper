@@ -104,7 +104,7 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                     timingConfig,
                     () => {
                         runOnJS(onPageFlip)(id, false);
-                        // runOnJS(setIsInteractingWithPrev)(false);
+                        runOnJS(setIsInteractingWithPrev)(false);
                     }
                 );
             },
@@ -160,12 +160,12 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                 const degrees = getDegreesForX(newX);
                 x.value = newX;
                 rotateYAsDeg.value = degrees;
-                if (newX > 0) {
-                    runOnJS(setIsInteractingWithPrev)(true);
-                } 
-                else {
-                    runOnJS(setIsInteractingWithPrev)(false);
-                }
+                // if (newX > 0) {
+                //     runOnJS(setIsInteractingWithPrev)(true);
+                // } 
+                // else {
+                //     runOnJS(setIsInteractingWithPrev)(false);
+                // }
                 if (onPageDrag && typeof onPageDrag === 'function') {
                     runOnJS(onPageDrag)();
                 }
