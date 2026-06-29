@@ -492,19 +492,26 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
 
         const ContentWrapper = renderContainer ? renderContainer : Wrapper;
 
+        // Defer rendering the pages until the container has been measured.
+        // Rendering before onLayout fires leaves containerSize at 0, which makes
+        // the flippable pages zero-width and exposes the background layer
+        // (showing the wrong spread) until the first interaction.
+        const layoutReady = width > 0 && height > 0;
+
         return (
             <View style={styles.container} onLayout={onLayout}>
-                <View
-                    style={[
-                        styles.contentContainer,
-                        {
-                            height: containerSize.height,
-                            width: containerSize.width,
-                        },
-                        contentContainerStyle,
-                    ]}
-                >
-                    <ContentWrapper>
+                {layoutReady && (
+                    <View
+                        style={[
+                            styles.contentContainer,
+                            {
+                                height: containerSize.height,
+                                width: containerSize.width,
+                            },
+                            contentContainerStyle,
+                        ]}
+                    >
+                        <ContentWrapper>
                         {!isPortrait ? (
                             <View style={styles.content}>
                                 {!prev ? (
@@ -582,8 +589,9 @@ const PageFlipper = React.forwardRef<PageFlipperInstance, IPageFlipperProps>(
                                 )}
                             </View>
                         )}
-                    </ContentWrapper>
-                </View>
+                        </ContentWrapper>
+                    </View>
+                )}
             </View>
         );
     }
