@@ -1,0 +1,12 @@
+---
+description: Never commit without explicit user approval
+alwaysApply: true
+---
+
+# Git commits require explicit approval
+
+NEVER run `git commit` (or `git commit --amend`, `git merge`, `git rebase`, `git push`, or anything else that creates or publishes commits) unless the user has explicitly asked for or approved that specific commit in the current conversation.
+
+- Making code changes is fine; committing them is not.
+- Proposing a commit message and waiting for approval is fine.
+- "Fix this bug" or "do it" for a code change is NOT approval to commit.

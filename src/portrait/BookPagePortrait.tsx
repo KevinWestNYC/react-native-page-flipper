@@ -245,6 +245,12 @@ const BookPagePortrait = React.forwardRef<PortraitBookInstance, IBookPageProps>(
                 <PanGestureHandler
                     onGestureEvent={onPanGestureHandler}
                     enabled={gesturesEnabled}
+                    // Page turns only ever read translationX/velocityX, so give
+                    // up vertical drags entirely. Without these thresholds this
+                    // handler claims the gesture in any direction and a
+                    // scrollable page body can never receive a vertical pan.
+                    activeOffsetX={[-10, 10]}
+                    failOffsetY={[-20, 20]}
                 >
                     <Animated.View style={containerStyle}>
                         {isPressable && prev && (
